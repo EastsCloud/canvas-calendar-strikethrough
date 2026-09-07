@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<title>Canvas 手动完成 · 本地测试夹具</title>
+<style>
+  body { font: 16px/1.6 system-ui; margin: 32px; color: #233444; background: #f5f7f9; }
+  #calendar-app { max-width: 720px; padding: 24px; background: white; border: 1px solid #d8e0e6; border-radius: 10px; }
+  h1 { font-size: 22px; margin: 0 0 8px; }
+  h2 { font-size: 16px; margin: 24px 0 8px; }
+  .fc-event { position: relative; display: block; min-height: 26px; padding: 2px 6px; margin: 8px 0; border-left: 4px solid #1572ad; background: #e8f3fa; color: #17435e; text-decoration: none; }
+  .calendar__event--completed { text-decoration: line-through; }
+  li { margin: 8px 0; padding: 3px 6px; }
+  td { padding: 6px; }
+  .screenreader-only { position: absolute; width: 1px; height: 1px; overflow: hidden; }
+</style>
+<div id="calendar-app">
+  <h1>日历手动完成 · 测试夹具</h1>
+  <p>合成页面，参考 Canvas 公开模板；并非真实课程数据。</p>
+  <div id="calendar" class="fc">
+    <h2>月／周视图</h2>
+    <a id="assignment-a" class="fc-event" href="/courses/1/assignments/101"><span class="fc-title">每周阅读（同名事项 A）</span></a>
+    <a id="assignment-b" class="fc-event" href="/courses/1/assignments/102"><span class="fc-title">每周阅读（同名事项 A）</span></a>
+    <a id="bridge-event" class="fc-event"><span class="fc-title">课程答疑 · 仅 FullCalendar 数据对象提供 ID</span></a>
+    <a id="native-event" class="fc-event" data-event-id="assignment_104"><span class="fc-title calendar__event--completed">Canvas 原生已完成事项</span></a>
+    <a id="unknown-event" class="fc-event" data-event-id="105"><span class="fc-title">类型不明确，安全跳过</span></a>
+    <a id="ambiguous-event" class="fc-event" data-assignment-id="106" data-calendar-event-id="107"><span class="fc-title">标识冲突，安全跳过</span></a>
+  </div>
+  <h2>议程视图</h2>
+  <div class="agenda-container"><ul class="agenda-event__list">
+    <li id="agenda-event" class="agenda-event__item" data-event-id="assignment_101"><div class="agenda-event__item-container" role="button" tabindex="0"><span class="agenda-event__title">每周阅读 · 与月视图 A 为同一事项</span></div></li>
+  </ul></div>
+  <h2>无日期事项</h2>
+  <ul id="undated_events_list"><li id="undated-event" class="undated_event event planner_note_108" data-event-id="planner_note_108"><a class="undated_event_title" href="#">整理课堂笔记</a></li></ul>
+  <h2>新版 FullCalendar 列表兼容</h2>
+  <table><tbody><tr id="list-event" class="fc-list-event" data-event-id="calendar_event_109"><td>10:00</td><td class="fc-list-event-title"><a href="/calendar_events/109">小组讨论</a></td></tr></tbody></table>
+</div>
+<script>
+  // FullCalendar 3 stores segments in jQuery's DOM data cache. No real jQuery needed.
+  document.querySelector('#bridge-event').jQuery3710002 = {fcSeg: {footprint: {eventDef: {rawId: 'calendar_event_103'}}}};
+  window.canvasClicks = 0;
+  document.addEventListener('click', event => {
+    if (event.target.closest('.fc-event, .agenda-event__item-container, .undated_event_title')) {
+      window.canvasClicks += 1;
+      event.preventDefault();
+    }
+  });
+</script>
+</html>

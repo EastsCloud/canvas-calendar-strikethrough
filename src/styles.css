@@ -1,0 +1,72 @@
+/* Scope every rule to extension-owned classes. Leave Canvas native styles intact. */
+.cmc-item .cmc-title {
+  padding-inline-end: 23px;
+}
+.cmc-item.canvas-manual-completed {
+  /* Mute the event's own course color, including its icon and border. */
+  filter: saturate(0.65) brightness(0.78);
+}
+.cmc-item.canvas-manual-completed .cmc-title {
+  text-decoration: line-through !important;
+  text-decoration-thickness: 1.5px !important;
+}
+/* Do not override FullCalendar's absolute positioning for timed events. */
+.cmc-item:not(.fc-event),
+.cmc-item > td:has(> .cmc-toggle) {
+  position: relative;
+}
+.cmc-item .cmc-toggle {
+  position: absolute;
+  inset-inline-end: 2px;
+  top: 1px;
+  z-index: 2;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #526576;
+  border-radius: 4px;
+  background: #fff;
+  color: #243746;
+  font: bold 13px/1 system-ui, sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+}
+.cmc-item:hover .cmc-toggle,
+:root.cmc-keyboard-navigation .cmc-item .cmc-toggle:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.cmc-item .cmc-toggle[aria-pressed="true"] {
+  background: #176343;
+  color: #fff;
+  border-color: #176343;
+}
+.cmc-item .cmc-toggle:focus-visible {
+  outline: 2px solid #005fcc;
+  outline-offset: 2px;
+}
+.cmc-item .cmc-toggle:disabled { cursor: wait; }
+.cmc-notice {
+  position: fixed;
+  inset-inline-end: 16px;
+  bottom: 16px;
+  z-index: 2147483647;
+  max-width: min(420px, calc(100vw - 64px));
+  padding: 14px;
+  border: 1px solid #b84132;
+  border-radius: 6px;
+  background: #fff;
+  color: #73241b;
+  box-shadow: 0 2px 12px #0003;
+  font: 14px/1.5 system-ui, sans-serif;
+}
+.cmc-notice button { margin-inline-start: 12px; }
+@media print { .cmc-toggle, .cmc-notice { display: none !important; } }

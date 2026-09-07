@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Canvas 日历手动完成",
+  "version": "1.1.1",
+  "minimum_chrome_version": "111",
+  "description": "为 Canvas 日历添加本地手动完成标记，支持持久保存与标签页自动同步。",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["*://*/calendar*"],
+      "js": ["src/page-bridge.js"],
+      "world": "MAIN",
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*/calendar*"],
+      "js": ["src/identity.js", "src/storage.js", "src/content.js"],
+      "css": ["src/styles.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
