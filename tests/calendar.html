@@ -1,7 +1,7 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <meta charset="utf-8">
-<title>Canvas 手动完成 · 本地测试夹具</title>
+<title>Canvas Calendar Strikethrough - Local Fixture</title>
 <style>
   body { font: 16px/1.6 system-ui; margin: 32px; color: #233444; background: #f5f7f9; }
   #calendar-app { max-width: 720px; padding: 24px; background: white; border: 1px solid #d8e0e6; border-radius: 10px; }
@@ -14,25 +14,25 @@
   .screenreader-only { position: absolute; width: 1px; height: 1px; overflow: hidden; }
 </style>
 <div id="calendar-app">
-  <h1>日历手动完成 · 测试夹具</h1>
-  <p>合成页面，参考 Canvas 公开模板；并非真实课程数据。</p>
+  <h1>Calendar Completion - Test Fixture</h1>
+  <p>A synthetic page based on public Canvas templates. No real course data.</p>
   <div id="calendar" class="fc">
-    <h2>月／周视图</h2>
-    <a id="assignment-a" class="fc-event" href="/courses/1/assignments/101"><span class="fc-title">每周阅读（同名事项 A）</span></a>
-    <a id="assignment-b" class="fc-event" href="/courses/1/assignments/102"><span class="fc-title">每周阅读（同名事项 A）</span></a>
-    <a id="bridge-event" class="fc-event"><span class="fc-title">课程答疑 · 仅 FullCalendar 数据对象提供 ID</span></a>
-    <a id="native-event" class="fc-event" data-event-id="assignment_104"><span class="fc-title calendar__event--completed">Canvas 原生已完成事项</span></a>
-    <a id="unknown-event" class="fc-event" data-event-id="105"><span class="fc-title">类型不明确，安全跳过</span></a>
-    <a id="ambiguous-event" class="fc-event" data-assignment-id="106" data-calendar-event-id="107"><span class="fc-title">标识冲突，安全跳过</span></a>
+    <h2>Month / Week View</h2>
+    <a id="assignment-a" class="fc-event" href="/courses/1/assignments/101"><span class="fc-title">Weekly Reading</span></a>
+    <a id="assignment-b" class="fc-event" href="/courses/1/assignments/102"><span class="fc-title">Weekly Reading</span></a>
+    <a id="bridge-event" class="fc-event"><span class="fc-title">Office Hours - ID from FullCalendar data only</span></a>
+    <a id="native-event" class="fc-event" data-event-id="assignment_104"><span class="fc-title calendar__event--completed">Natively completed Canvas item</span></a>
+    <a id="unknown-event" class="fc-event" data-event-id="105"><span class="fc-title">Unknown item type - safely skipped</span></a>
+    <a id="ambiguous-event" class="fc-event" data-assignment-id="106" data-calendar-event-id="107"><span class="fc-title">Conflicting identifiers - safely skipped</span></a>
   </div>
-  <h2>议程视图</h2>
+  <h2>Agenda View</h2>
   <div class="agenda-container"><ul class="agenda-event__list">
-    <li id="agenda-event" class="agenda-event__item" data-event-id="assignment_101"><div class="agenda-event__item-container" role="button" tabindex="0"><span class="agenda-event__title">每周阅读 · 与月视图 A 为同一事项</span></div></li>
+    <li id="agenda-event" class="agenda-event__item" data-event-id="assignment_101"><div class="agenda-event__item-container" role="button" tabindex="0"><span class="agenda-event__title">Weekly Reading - same item as month view A</span></div></li>
   </ul></div>
-  <h2>无日期事项</h2>
-  <ul id="undated_events_list"><li id="undated-event" class="undated_event event planner_note_108" data-event-id="planner_note_108"><a class="undated_event_title" href="#">整理课堂笔记</a></li></ul>
-  <h2>新版 FullCalendar 列表兼容</h2>
-  <table><tbody><tr id="list-event" class="fc-list-event" data-event-id="calendar_event_109"><td>10:00</td><td class="fc-list-event-title"><a href="/calendar_events/109">小组讨论</a></td></tr></tbody></table>
+  <h2>Undated Items</h2>
+  <ul id="undated_events_list"><li id="undated-event" class="undated_event event planner_note_108" data-event-id="planner_note_108"><a class="undated_event_title" href="#">Organize class notes</a></li></ul>
+  <h2>Modern FullCalendar List Compatibility</h2>
+  <table><tbody><tr id="list-event" class="fc-list-event" data-event-id="calendar_event_109"><td>10:00</td><td class="fc-list-event-title"><a href="/calendar_events/109">Group discussion</a></td></tr></tbody></table>
 </div>
 <script>
   // FullCalendar 3 stores segments in jQuery's DOM data cache. No real jQuery needed.

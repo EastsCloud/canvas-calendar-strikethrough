@@ -52,7 +52,7 @@ function backend(initial = {}) {
   return api;
 }
 
-test("不同标签页并发修改不同事项不会相互覆盖，取消实时同步", async () => {
+test("Concurrent edits to different items preserve both changes and synchronize undo", async () => {
   const db = backend();
   const a = db.tab(), b = db.tab();
   await Promise.all([a.ready, b.ready]);
@@ -63,20 +63,20 @@ test("不同标签页并发修改不同事项不会相互覆盖，取消实时�
   assert.equal(a.isCompleted("a"), false);
   assert.equal(db.values["cmc:v1:b"], true);
 });
-test("初始化快照不能覆盖读取期间收到的取消通知", async () => {
+test("The initial snapshot cannot overwrite an undo received during loading", async () => {
   const db = backend({"cmc:v1:a": true});
   db.beforeSnapshot = () => db.emit({"cmc:v1:a": {oldValue: true}});
   const tab = db.tab();
   await tab.ready;
   assert.equal(tab.isCompleted("a"), false);
 });
-test("同一事项快速切换按顺序执行", async () => {
+test("Rapid toggles of the same item run in order", async () => {
   const tab = backend().tab();
   await tab.ready;
   await Promise.all([tab.toggleCompleted("a"), tab.toggleCompleted("a")]);
   assert.equal(tab.isCompleted("a"), false);
 });
-test("写入失败不留下虚假完成状态，后续可重试", async () => {
+test("A failed write leaves no false completion state and can be retried", async () => {
   const db = backend();
   const tab = db.tab();
   await tab.ready;
@@ -86,7 +86,7 @@ test("写入失败不留下虚假完成状态，后续可重试", async () => {
   await tab.toggleCompleted("a");
   assert.equal(tab.isCompleted("a"), true);
 });
-test("重启重新加载存储，不响应 sync 区域和无关条目，不产生通知循环", async () => {
+test("Reloading restores storage, ignores unrelated changes, and avoids notification loops", async () => {
   const db = backend();
   const a = db.tab();
   await a.setCompleted("a", true);

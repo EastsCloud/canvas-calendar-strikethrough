@@ -51,7 +51,7 @@ async function click(page, selector) {
     await b.locator("#assignment-a .cmc-toggle").waitFor({state: "attached"});
     assert.equal(await a.locator(".cmc-toggle").count(), 7);
     assert.equal(await a.locator("#unknown-event .cmc-toggle, #ambiguous-event .cmc-toggle").count(), 0);
-    console.log("PASS: manifest 路径、真实扩展加载、FullCalendar 对象桥接、议程与无日期识别");
+    console.log("PASS: manifest paths, extension loading, FullCalendar bridge, agenda and undated items");
 
     await click(a, "#assignment-a");
     await state(b, "#assignment-a", true);
@@ -60,7 +60,7 @@ async function click(page, selector) {
     assert.equal(await a.evaluate(() => window.canvasClicks), 0);
     assert.ok(await a.locator("#assignment-a .fc-title").evaluate(node => getComputedStyle(node).textDecorationLine.includes("line-through")));
     await a.mouse.move(1050, 950);
-    assert.equal(await a.locator('#assignment-a .cmc-toggle').evaluate(node => getComputedStyle(node).opacity), '0', '鼠标点击后移出，已完成按钮也应隐藏');
+    assert.equal(await a.locator('#assignment-a .cmc-toggle').evaluate(node => getComputedStyle(node).opacity), '0', 'Completed buttons must hide when the pointer leaves after a click');
     await a.locator('#assignment-a').hover();
     assert.equal(await a.locator('#assignment-a .cmc-toggle').evaluate(node => getComputedStyle(node).opacity), '1');
     await click(b, "#assignment-a");
@@ -70,7 +70,7 @@ async function click(page, selector) {
     await a.locator("#assignment-a .fc-title").click({modifiers: ["Alt"]});
     await state(b, "#assignment-a", true);
     assert.equal(await a.evaluate(() => window.canvasClicks), 1);
-    console.log("PASS: 双向跨标签页同步、取消、同名隔离、正常单击和 Alt 单击");
+    console.log("PASS: bidirectional tab sync, undo, same-title isolation, normal clicks and Alt-click");
 
     const scans = await a.evaluate(() => {
       window.cmcMutationCount = 0;
@@ -79,7 +79,7 @@ async function click(page, selector) {
       return window.cmcMutationCount;
     });
     await a.waitForTimeout(500);
-    assert.equal(await a.evaluate(() => window.cmcMutationCount), scans, "空闲时不应有 MutationObserver 自循环");
+    assert.equal(await a.evaluate(() => window.cmcMutationCount), scans, "MutationObserver must not loop while idle");
     await a.evaluate(() => {
       for (let i = 0; i < 25; i++) {
         const node = document.createElement('span');
@@ -94,7 +94,7 @@ async function click(page, selector) {
     await a.evaluate(() => {
       document.querySelector('#assignment-a').setAttribute('href', '/courses/1/assignments/120');
       document.querySelector('#bridge-event').jQuery3710002.fcSeg.footprint.eventDef.rawId = 'calendar_event_121';
-      document.querySelector('#bridge-event .fc-title').textContent = '重新渲染后的事项';
+      document.querySelector('#bridge-event .fc-title').textContent = 'Re-rendered event';
     });
     await state(a, "#assignment-a", false);
     await a.waitForFunction(() => document.querySelector('#bridge-event').getAttribute('data-cmc-event-id') === 'calendar_event_121');
@@ -103,7 +103,7 @@ async function click(page, selector) {
     await a.reload();
     await state(a, "#assignment-a", true);
     await state(a, "#bridge-event", false);
-    console.log("PASS: 幂等、无空闲循环、克隆节点、ID 复用、重新加载");
+    console.log("PASS: idempotency, no idle loops, cloned nodes, reused IDs and page reloads");
 
     await click(a, "#native-event");
     await click(a, "#native-event");
@@ -112,7 +112,7 @@ async function click(page, selector) {
     await a.locator('#undated-event .cmc-toggle').focus();
     await a.keyboard.press('Space');
     await state(b, '#undated-event', true);
-    assert.equal(await a.locator('#undated-event .cmc-toggle').evaluate(node => getComputedStyle(node).opacity), '1', '键盘导航时按钮应保持可见');
+    assert.equal(await a.locator('#undated-event .cmc-toggle').evaluate(node => getComputedStyle(node).opacity), '1', 'Buttons must remain visible during keyboard navigation');
     await a.keyboard.press('Enter');
     await state(b, '#undated-event', false);
     const other = await tab(context, 'canvas.custom.example');
@@ -136,7 +136,7 @@ async function click(page, selector) {
     await click(a, '#bridge-event');
     await state(b, '#bridge-event', true);
     await a.screenshot({path: path.join(results, 'calendar.png'), fullPage: true});
-    console.log('PASS: CMU、自定义域名、Instructure、HTTP、非 Canvas 页面跳过、延迟 Canvas 标识、域名隔离与键盘操作');
+    console.log('PASS: CMU, custom domains, Instructure, HTTP, non-Canvas filtering, delayed Canvas markers, domain isolation and keyboard controls');
 
     await context.close();
     context = await launch();
@@ -148,7 +148,7 @@ async function click(page, selector) {
     await restarted.locator('#assignment-a .cmc-toggle').waitFor({state: 'attached'});
     await state(restarted, '#assignment-a', false);
     assert.deepEqual(failures, []);
-    console.log('PASS: 浏览器进程关闭／重启后持久化、取消后刷新、无页面脚本错误');
+    console.log('PASS: persistence after browser restart, reload after undo, and no page script errors');
     fs.writeFileSync(path.join(results, 'browser-results.txt'), 'PASS: all browser integration checks\n');
   } finally { await context.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });

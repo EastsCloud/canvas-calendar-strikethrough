@@ -26,12 +26,12 @@
       const message = document.createElement("span");
       const close = document.createElement("button");
       close.type = "button";
-      close.textContent = "关闭";
+      close.textContent = "Dismiss";
       close.addEventListener("click", () => { notice.remove(); notice = null; });
       notice.append(message, close);
       document.body.append(notice);
     }
-    notice.firstChild.textContent = "手动完成标记保存失败。请刷新页面后重试，并检查扩展是否已启用。";
+    notice.firstChild.textContent = "Could not save your completion mark. Refresh the page and try again, and check that the extension is enabled.";
   }
   function setAttribute(node, name, value) {
     if (node.getAttribute(name) !== value) node.setAttribute(name, value);
@@ -39,7 +39,7 @@
   function paint(record) {
     const done = app.storage.isCompleted(record.key);
     record.element.classList.toggle(DONE_CLASS, done);
-    const text = done ? "取消本地完成标记" : "标记为本地已完成";
+    const text = done ? "Remove local completion mark" : "Mark complete locally";
     setAttribute(record.button, "aria-pressed", String(done));
     setAttribute(record.button, "aria-label", text);
     // An empty title suppresses both our tooltip and native ancestor-title fallback.
@@ -86,7 +86,7 @@
           untrack(element);
           if (!skipped.has(element)) {
             skipped.add(element);
-            app.log("跳过事项：缺少唯一的稳定 ID 或标题节点；请核对 SELECTORS/getItemIdentity。", element);
+            app.log("Skipped item: missing a unique stable ID or title element. Check SELECTORS/getItemIdentity.", element);
           }
           continue;
         }
@@ -118,7 +118,7 @@
       }
       if (statistics.supported !== records.size) {
         statistics.supported = records.size;
-        app.log("已识别日历事项", records.size);
+        app.log("Recognized calendar items", records.size);
       }
     } finally {
       observer.observe(document.body, {
@@ -150,7 +150,7 @@
     byKey.get(record.key)?.forEach(paint);
     try {
       await app.storage.toggleCompleted(record.key);
-      app.log("手动切换事项", record.key);
+      app.log("Toggled local completion", record.key);
     } catch (error) { showError(error); }
     finally {
       pending.delete(record.key);
@@ -203,6 +203,6 @@
     window.addEventListener("hashchange", scheduleScan);
     app.statistics = statistics;
     processCalendarItems();
-    app.log("扩展初始化完成");
+    app.log("Extension initialized");
   }).catch(showError);
 })();

@@ -36,7 +36,7 @@
       const value = change.newValue === true;
       if (loading) changedDuringLoad.set(key, value);
       publish(key, value);
-      app.log("存储通知（包含跨标签页同步）", key, value);
+      app.log("Storage change (including cross-tab updates)", key, value);
     }
   });
   // Register the listener before reading, then replay concurrent changes over the snapshot.
@@ -63,7 +63,7 @@
     if (value) await call("set", {[PREFIX + key]: true});
     else await call("remove", PREFIX + key);
     // UI changes come ONLY from onChanged. Write callbacks never restore a stale value.
-    app.log("本地写入成功", key, value);
+    app.log("Local write succeeded", key, value);
     return value;
   }
   app.storage = Object.freeze({
