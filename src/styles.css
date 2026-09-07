@@ -2,11 +2,9 @@
 .cmc-item .cmc-title {
   padding-inline-end: 23px;
 }
-.cmc-item.canvas-manual-completed {
-  /* Mute the event's own course color, including its icon and border. */
-  filter: saturate(0.65) brightness(0.78);
-}
 .cmc-item.canvas-manual-completed .cmc-title {
+  /* Only the title is muted; keep the time, event icon and border unchanged. */
+  filter: saturate(0.65) brightness(0.78);
   text-decoration: line-through !important;
   text-decoration-thickness: 1.5px !important;
 }

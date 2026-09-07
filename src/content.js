@@ -42,7 +42,8 @@
     const text = done ? "取消本地完成标记" : "标记为本地已完成";
     setAttribute(record.button, "aria-pressed", String(done));
     setAttribute(record.button, "aria-label", text);
-    setAttribute(record.button, "title", `${text}（也可 Alt + 单击事项）`);
+    // An empty title suppresses both our tooltip and native ancestor-title fallback.
+    setAttribute(record.button, "title", "");
     record.button.disabled = pending.has(record.key);
   }
   function untrack(element) {
