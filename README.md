@@ -1,6 +1,6 @@
 # Canvas Calendar Strikethrough
 
-A lightweight browser extension that lets you manually mark Canvas Calendar items as complete. It works with Opera, Chrome, and Edge, including Canvas sites on custom domains such as `canvas.cmu.edu`.
+A lightweight browser extension that lets you manually mark Canvas Calendar items as complete. It works with Opera, Chrome, and Edge, including Canvas sites on custom domains.
 
 Completed titles are struck through and muted. Times, icons, and event borders keep their original colors. Your marks survive page reloads and browser restarts, and updates appear automatically in other tabs using the same browser profile.
 
