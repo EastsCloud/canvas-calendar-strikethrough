@@ -15,7 +15,7 @@ Completed titles are struck through and muted. Times, icons, and event borders k
    - Edge: `edge://extensions`
 3. Enable **Developer mode**.
 4. Click **Load unpacked** and select the extracted folder containing `manifest.json`.
-5. Open or refresh your Canvas Calendar, for example `https://canvas.cmu.edu/calendar`.
+5. Open or refresh your Canvas Calendar.
 
 No build step or additional software is required. Keep the extension folder in place while using it.
 
